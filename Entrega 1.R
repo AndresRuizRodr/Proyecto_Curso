@@ -62,5 +62,3 @@ usethis::git_sitrep()
 #5	Pruebas internas con distintos escenarios ficticios
 #6	Diseño de reportes e interpretación automatizada
 #7	Ajustes finales, documentación del código y redacción del informe
-
-
