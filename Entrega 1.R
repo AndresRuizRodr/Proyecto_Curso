@@ -11,3 +11,5 @@ usethis::git_sitrep()
 #############
 
 renv::init()
+
+renv::snapshot()
