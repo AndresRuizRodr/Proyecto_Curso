@@ -54,4 +54,13 @@ usethis::git_sitrep()
 #Datos históricos reales de mercado (aunque puede ser extensión futura).
 
 
+#Carta Gantt (planificación por etapas)
+#1	Revisión conceptual del modelo Brinson-Fachler y definición de requisitos
+#2	Diseño del flujo lógico del simulador (inputs, cálculos, outputs)
+#3	Codificación de funciones base para cálculo de atribución en R
+#4	Desarrollo de la interfaz Shiny (formulario de entrada y visualización)
+#5	Pruebas internas con distintos escenarios ficticios
+#6	Diseño de reportes e interpretación automatizada
+#7	Ajustes finales, documentación del código y redacción del informe
+
 
