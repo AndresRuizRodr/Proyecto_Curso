@@ -7,21 +7,21 @@
 
 
 # ¿Qué efectos calcula?
-# 1. ASIGNACIÓN (Allocation Effect): 
+# 1. Asignación (Allocation Effect): 
 #    Mide si se asignó más (o menos) peso relativo a sectores que 
 #    tuvieron mejor rendimiento en el benchmark. Es un efecto 
 #    "estratégico" de distribución de pesos.
 
-# 2. SELECCIÓN (Selection Effect): 
+# 2. Selección (Selection Effect): 
 #    Mide si se eligieron activos financieros que rindieron más (o menos) 
 #    que el promedio del sector en el benchmark. Es un efecto 
 #    "táctico" de elección de activos.
 
-# 3. INTERACCIÓN (Interaction Effect): 
+# 3. Interacción (Interaction Effect): 
 #    Mide el efecto combinado entre una buena (o mala) asignación 
 #    y una buena (o mala) selección en el mismo sector.
 
-# 4. TOTAL: 
+# 4. Total: 
 #    Es la suma de los tres efectos anteriores y representa la 
 #    diferencia de rendimiento entre el portafolio y el benchmark.
 
@@ -42,7 +42,6 @@
 # A continuación comienza la definición de funciones:
 # ---------------------------------------------------------------
 
-
 # Librerías
 library(tidyverse)
 
@@ -62,7 +61,7 @@ brinson_bf <- function(w_p, r_p, w_b, r_b) {
   
   return(tibble(
     Efecto = c("Asignación", "Selección", "Interacción", "Total"),
-    Valor = c(allocation, selection, interaction, total)
+    Valor = c(allocation, selection, interaction, total)*100
   ))
 }
 
@@ -76,7 +75,7 @@ interpretar_resultado <- function(efectos) {
     slice_max(abs(Valor), n = 1)
   
   glue::glue("El mayor impacto en el rendimiento proviene del efecto de *{efecto_mayor$Efecto}*, 
-con una contribución de {round(efecto_mayor$Valor, 4)}. 
+con una contribución de {round(efecto_mayor$Valor, 4)}%. 
 Esto indica que la ventaja comparativa del portafolio frente al benchmark se debe principalmente a ese componente.")
 }
 
@@ -122,3 +121,24 @@ res <- ejecutar_modelo(datos)
 print(res$resultados)
 cat("\nInterpretación:\n")
 cat(res$interpretacion)
+
+
+# ----------------------------
+# Graficar los efectos
+# ----------------------------
+
+library(ggplot2)
+
+# Filtramos solo con los tres efectos (sin Total)
+efectos_grafico <- res$resultados %>%
+  filter(Efecto != "Total")
+
+# Graficamos con ggplot2
+ggplot(efectos_grafico, aes(x = Efecto, y = Valor, fill = Efecto)) +
+  geom_col(width = 0.5) +
+  geom_text(aes(label = round(Valor, 4)), vjust = -0.5, size = 4.5) +
+  labs(title = "Descomposición del Rendimiento, por tipo de efecto - Modelo Brinson-Fachler",
+       x = "Tipo de efecto",
+       y = "Contribución (%)") +
+  theme_minimal(base_size = 16) +
+  theme(legend.position = "none")
