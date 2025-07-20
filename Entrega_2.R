@@ -142,3 +142,5 @@ ggplot(efectos_grafico, aes(x = Efecto, y = Valor, fill = Efecto)) +
        y = "Contribución (%)") +
   theme_minimal(base_size = 16) +
   theme(legend.position = "none")
+
+
