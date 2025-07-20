@@ -144,3 +144,4 @@ ggplot(efectos_grafico, aes(x = Efecto, y = Valor, fill = Efecto)) +
   theme(legend.position = "none")
 
 
+
